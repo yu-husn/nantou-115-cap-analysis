@@ -130,7 +130,7 @@ function orderMarkup(subject){
 
  if(active==='national'||active==='city'){
 
-   const label=active==='national'?'全國':'南投縣（南投縣）';
+   const label=active==='national'?'全國':'南投縣';
 
    note=hasCompare(subject,active)?`依「學校通過率－${label}通過率」由低至高排列，差距最負的題目排在最前面；若全為正值，優勢最小的題目在前。差距相同時依題號排列，缺少比較值的題目置末。`:`本科尚未提供${label}逐題通過率，無法計算差距；目前保留全部題目，暫依題號順序顯示。`;
 
