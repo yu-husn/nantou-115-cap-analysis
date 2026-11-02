@@ -472,6 +472,6 @@ document.getElementById('close-dialog').addEventListener('click',()=>document.ge
 document.getElementById('item-dialog').addEventListener('click',event=>{if(event.target===event.currentTarget){const r=event.currentTarget.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.currentTarget.close();}});
 
 render();renderMethods();renderGrades();
-const source=document.createElement('div');source.style.marginTop='16px';source.innerHTML=`<a class="btn" href="${esc(DATA.sourceFolder)}" target="_blank" rel="noopener">📁 心測中心原始資料</a> <a class="btn" href="index.html">全部37校</a>`;document.getElementById('school-line').after(source);
+const source=document.createElement('div');source.style.marginTop='16px';source.innerHTML=`<a class="btn" href="${esc(DATA.sourceFolder)}" target="_blank" rel="noopener">📁 心測中心原始資料</a>`;document.getElementById('school-line').after(source);
 const ov=document.querySelector('.overview-section'),gr=document.getElementById('grade-overview');ov.before(gr);
 for(const section of document.querySelectorAll('main>section')){const a=document.createElement('a');a.className='btn back-top';a.href='#pageTop';a.textContent='↑ 回最上面';section.append(a)}

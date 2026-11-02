@@ -17,7 +17,7 @@ dialog{width:min(1140px,calc(100% - 36px));max-height:90vh;border:1px solid var(
 .group-denominator{margin-top:10px}.history-table{min-width:1020px;margin-top:16px}.history-table th:first-child{width:25%;white-space:normal}.history-table td{min-width:145px}.history-note{margin-top:12px}.grade-table{min-width:930px}.grade-absent{display:block;font-weight:400;font-size:11px;margin-top:6px}.grade-notes{padding:16px 22px;font-size:12px;color:var(--muted)}.grade-notes p+p{margin-top:8px}.official-grade-charts{margin-top:12px}.official-grade-charts summary{cursor:pointer;font-weight:650;color:var(--green)}.grade-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:14px}.grade-chart-grid figure{margin:0;padding:10px;border:1px solid var(--line);border-radius:6px;background:white}.grade-chart-grid img{display:block;width:100%;height:auto;background:white}.grade-chart-grid figcaption{font-size:13px;margin-bottom:8px}.item-table{min-width:1340px}.group-pass{color:var(--green);font-weight:650}@media(max-width:660px){.grade-chart-grid{grid-template-columns:1fr}}@media print{.grade-overview-section{display:none}.history-table{min-width:0;font-size:9px}.history-table td{min-width:0}.history-note{font-size:8px}.item-table{min-width:0}}
 .doc-fragment .source-table{border-collapse:collapse;max-width:100%}.doc-fragment .source-table td{border:1px solid #ccd5d2;padding:6px}.doc-fragment p{margin:.4em 0}.doc-fragment img{max-width:100%;height:auto}.doc-fragment .shared-material{margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #ccd5d2}</style>
 <style>body{font-size:20px;line-height:1.8;--green:#1766b5;--green-dark:#124c86;--green-light:#eaf2fb}h2{font-size:28px}h3{font-size:23px}.small,.muted,.notice,.table-footnote,.grade-notes,.history-note,.doc-source,.legend{font-size:18px}.numeric,.item-table td,.grade-table td{font-size:22px}.item-table small,.detail-table small{font-size:18px}.btn,select{font-size:19px}.history-table{font-size:20px}.overview-value{font-size:30px}.overview-benchmarks,.overview-count{font-size:18px}.grade-table{min-width:680px}.back-top{margin-top:18px}.doc-fragment img{max-width:100%;height:auto}.source-question-part{font-size:21px}.source-table{border-collapse:collapse;max-width:100%}.source-table td{padding:8px;border:1px solid #ccd5df}@media(max-width:660px){body{font-size:18px}.wrap{width:calc(100% - 24px)}.numeric,.item-table td{font-size:20px}}</style><style>.grade-table th,.history-table th,.item-table th{font-size:19px}.grade-absent{font-size:16px}.detail-table th,.detail-table td,.group-table th,.group-table td{font-size:20px}.overview-head strong{font-size:23px}</style></head>
-<body id="pageTop"><nav style="padding:10px 24px;background:#f0f5f3"><a href="index.html" style="color:#126650">← 回學校總目錄</a></nav><div id="loading" role="status" style="padding:20px;text-align:center;background:#fff4d7">正在載入學校資料與完整試題圖片…</div>
+<body id="pageTop"><div id="loading" role="status" style="padding:20px;text-align:center;background:#fff4d7">正在載入學校資料與完整試題圖片…</div>
 <header class="masthead">
   <div class="wrap">
     <div class="eyebrow">國中教育會考・教學診斷報告</div>
@@ -39,10 +39,10 @@ dialog{width:min(1140px,calc(100% - 36px));max-height:90vh;border:1px solid var(
 const code=new URLSearchParams(location.search).get('school');
 async function script(src){return new Promise((ok,fail)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=()=>fail(new Error('無法載入 '+src));document.body.append(e)})}
 (async()=>{try{
- if(!/^08[0-9]{4}$/.test(code||'')){location.replace('index.html');return}
+ if(!/^08[0-9]{4}$/.test(code||'')){throw Error('請使用學校專屬網址')}
  await script('school-'+code+'.js');if(REPORT.schoolCode!==code)throw Error('學校代碼不符');
  await Promise.all(REPORT.subjects.map(s=>script('questions-'+s.id+'.js')));
  for(const s of REPORT.subjects)for(const i of s.items){const q=QUESTIONS[s.id][i.questionKey];if(!q)throw Error('缺少題目 '+s.name+i.qid);i.doc={html:q.html+(q.scoring?'<h4>評分指引</h4>'+q.scoring:''),note:'題目閱讀版來源：'+q.source+'；已核對本校正答。原始校級Word請由首頁資料夾查閱。'}}
- await script('app.js');document.getElementById('loading')?.remove();
+ await script('app.js?v=school-only');document.getElementById('loading')?.remove();
 }catch(e){document.getElementById('loading').textContent='資料未完整載入，請重新整理。'+e.message}})();
 </script></body></html>
